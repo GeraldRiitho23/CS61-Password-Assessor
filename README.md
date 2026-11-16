@@ -19,3 +19,16 @@ import requests
 url = "http://localhost:5001/assess"
 payload = {"password": "MySecretPass1!"}
 response = requests.post(url, json=payload)
+```
+```mermaid
+sequenceDiagram
+    participant TestProgram
+    participant Microservice
+    participant LogicEngine
+
+    TestProgram->>Microservice: POST /assess {"password": "pass"}
+    Microservice->>Microservice: Validate JSON
+    Microservice->>LogicEngine: evaluate_password("pass")
+    LogicEngine-->>Microservice: return "Weak", 1, ["Missing number", "Missing symbol"]
+    Microservice-->>TestProgram: HTTP 200 OK {"score": "Weak", "rules_passed": 1, "feedback": [...]}
+```
