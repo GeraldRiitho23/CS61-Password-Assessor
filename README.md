@@ -20,6 +20,25 @@ url = "http://localhost:5001/assess"
 payload = {"password": "MySecretPass1!"}
 response = requests.post(url, json=payload)
 ```
+## How to Receive Data (Programmatic)
+The microservice will respond with an HTTP status code and a JSON object. A successful request returns status `200`. A missing parameter returns status `400`.
+
+**Response Format:**
+*   `score` (string): "Strong", "Medium", "Weak", or "Compromised"
+*   `rules_passed` (integer): Number of rules the password satisfied (0-3)
+*   `feedback` (array of strings): Explanations for missing requirements.
+
+**Example Response:**
+```json
+{
+  "score": "Medium",
+  "rules_passed": 2,
+  "feedback": [
+    "Must include at least one symbol"
+  ]
+}
+```
+
 ```mermaid
 sequenceDiagram
     participant TestProgram
